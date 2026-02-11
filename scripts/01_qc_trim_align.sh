@@ -87,6 +87,22 @@ for R1_FILE in "${OUTPUT_DIR}/trimmed_fastqs"/*_1_trimmed.fastq; do
     rm "${OUTPUT_DIR}/alignments/${SAMPLE_NAME}.sam"
 done
 
+# 5) featureCounts (gene-level counts)
+GTF="${7:-data/reference/annotation.gtf}"
+mkdir -p "${OUT_DIR}/counts"
+
+if [[ -f "${GTF}" ]]; then
+  log "Running featureCounts"
+  featureCounts -T "${THREADS}" -p -B -C \
+    -a "${GTF}" \
+    -o "${OUT_DIR}/counts/gene_counts.txt" \
+    "${OUT_DIR}"/sorted_bams/*_sorted.bam \
+    >> "${OUT_DIR}/logs/featurecounts.log" 2>&1
+  log "Counts written to ${OUT_DIR}/counts/gene_counts.txt"
+else
+  log "Skipping featureCounts: GTF not found at ${GTF}"
+fi
+
 echo "Alignment and conversion completed."
 
 
