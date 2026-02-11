@@ -1,0 +1,29 @@
+# outputs
+results/
+logs/
+output/
+
+# big bio files
+*.sam
+*.bam
+*.bai
+*.fastq
+*.fastq.gz
+*.fq.gz
+
+# raw/reference (do not commit)
+data/raw/
+data/reference/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# R
+.Rhistory
+.RData
+
+# OS
+.DS_Store
